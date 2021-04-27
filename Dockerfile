@@ -1,7 +1,7 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 
 # Smallest base image
-FROM alpine:latest
+FROM alpine:3.7
 
 LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
 
@@ -22,10 +22,16 @@ VOLUME ["/etc/openvpn"]
 # Internally uses port 1194/udp, remap using `docker run -p 443:1194/tcp`
 EXPOSE 1194/udp
 
-CMD ["ovpn_run"]
-
 ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
 
+# Ngrok tunneling
+RUN apk --no-cache add curl
+RUN apk --no-cache add jq
+COPY start.sh /
+
 # Add support for OTP authentication using a PAM module
 ADD ./otp/openvpn /etc/pam.d/
+
+#START
+CMD ["/start.sh"]
