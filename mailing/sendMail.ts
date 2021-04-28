@@ -4,7 +4,7 @@ import Mail from 'nodemailer/lib/mailer';
 const senderMail: string | undefined = process.env.SENDERMAIL
 const senderPassword: string | undefined = process.env.SENDERPASSWORD
 const recipientMail: string | undefined = process.env.RECIPIENTMAIL
-const domain: string | undefined = process.env.NGROK_URL
+const ngrok_url: string | undefined = process.env.NGROK_URL
 
 var transporter = createTransport({
     service: 'gmail',
@@ -18,7 +18,7 @@ var transporter = createTransport({
     from: senderMail,
     to: recipientMail,
     subject: "New VPN Domain",
-    text: domain,
+    text: ngrok_url,
   };
   
   transporter.sendMail(mailOptions, function(error, info){

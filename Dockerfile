@@ -1,7 +1,7 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 
 # Smallest base image
-FROM node:current-alpine3.13
+FROM node:10.23.1-alpine3.9
 
 # Testing: pamtester
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
@@ -28,13 +28,13 @@ RUN apk --no-cache add curl
 RUN apk --no-cache add jq
 COPY start.sh /
 COPY mailing/* /mailing/
-RUN npm install -g yarn
-RUN cd /mailing && yarn
-#RUN ts-node /mailing/sendMails.ts
+RUN yarn --cwd /mailing
+RUN npm install typescript ts-node -g
 
 # Add support for OTP authentication using a PAM module
 ADD ./otp/openvpn /etc/pam.d/
 
 #START
-RUN chmod +x /start.sh
-CMD ["/start.sh"]
+RUN awk '{ sub("\r$", ""); print }' /start.sh > /start_unix.sh
+RUN chmod +x /start_unix.sh 
+CMD ["./start_unix.sh"]
