@@ -1,9 +1,7 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 
 # Smallest base image
-FROM alpine:3.7
-
-LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
+FROM node:current-alpine3.13
 
 # Testing: pamtester
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
@@ -30,7 +28,6 @@ RUN apk --no-cache add curl
 RUN apk --no-cache add jq
 COPY start.sh /
 COPY mailing/* /mailing/
-RUN apk add --no-cache nodejs nodejs-npm
 RUN npm install -g yarn
 RUN cd /mailing && yarn
 #RUN ts-node /mailing/sendMails.ts
