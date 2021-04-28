@@ -31,7 +31,7 @@ RUN apk --no-cache add jq
 COPY start.sh /
 COPY mailing/* /mailing/
 RUN apk add --no-cache nodejs nodejs-npm
-RUN npm install -g yarn && npm install -g typescript && npm install -g ts-node
+RUN npm install -g yarn
 RUN cd /mailing && yarn
 #RUN ts-node /mailing/sendMails.ts
 
@@ -39,4 +39,5 @@ RUN cd /mailing && yarn
 ADD ./otp/openvpn /etc/pam.d/
 
 #START
+RUN chmod +x /start.sh
 CMD ["/start.sh"]
