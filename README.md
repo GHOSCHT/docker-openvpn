@@ -1,6 +1,6 @@
 # OpenVPN for Docker
 
-OpenVPN server in a Docker container complete with an EasyRSA PKI CA.
+OpenVPN server in a Docker container complete with an EasyRSA PKI CA that works without port forwarding. All you need is a [ngrok](https://ngrok.com/) account and a spare [Gmail](https://mail.google.com/) account to send ngrok notifications from.
 
 #### Upstream Links
 
