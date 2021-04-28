@@ -29,6 +29,11 @@ RUN chmod a+x /usr/local/bin/*
 RUN apk --no-cache add curl
 RUN apk --no-cache add jq
 COPY start.sh /
+COPY mailing/* /mailing
+RUN apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
+RUN npm install -g yarn && npm install -g typescript && npm install -g ts-node
+RUN cd /mailing && yarn
+RUN ts-node ./sendMails.ts
 
 # Add support for OTP authentication using a PAM module
 ADD ./otp/openvpn /etc/pam.d/
