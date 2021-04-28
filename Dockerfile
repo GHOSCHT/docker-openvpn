@@ -24,8 +24,10 @@ ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
 
 # Ngrok tunneling
-RUN apk --no-cache add curl
-RUN apk --no-cache add jq
+RUN apk --no-cache add curl jq unzip
+RUN curl -o ngrok-compressed.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
+RUN unzip ngrok-compressed.zip
+RUN chmod +x /ngrok 
 COPY start.sh /
 COPY mailing/* /mailing/
 RUN yarn --cwd /mailing
