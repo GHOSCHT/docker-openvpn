@@ -91,7 +91,7 @@ included scripts to automatically generate:
 -   a private key
 -   a self-certificate matching the private key for the OpenVPN server
 -   an EasyRSA CA key and certificate
--   a TLS auth key from HMAC security
+-   tls-crypt for security & censorship circumvention in some regions or open WiFi hotspots
 
 The OpenVPN server is started with the default run cmd of `ovpn_run`
 
