@@ -21,6 +21,7 @@ if (recipientMail !== undefined) {
 if (ngrok_url !== undefined) {
   const clean_ngrok_url = ngrok_url
     .replace("tcp://", "")
+    .replace(/["']/g, "")
     .replace(".tcp.ngrok.io:", ":");
   const split_ngrok_url = clean_ngrok_url.split(":");
   mailText = `remote ${split_ngrok_url[0]}.tcp.ngrok.io ${split_ngrok_url[1]} tcp`;
