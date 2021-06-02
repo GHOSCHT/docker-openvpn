@@ -1,5 +1,8 @@
 import { createTransport } from "nodemailer";
 import { Options } from "nodemailer/lib/mailer";
+import { config } from "dotenv";
+import { resolve } from "path";
+config({ path: resolve(__dirname, "./.env") });
 
 const senderMail: string | undefined = process.env.SENDERMAIL;
 const senderPassword: string | undefined = process.env.SENDERPASSWORD;
@@ -17,25 +20,33 @@ if (ngrok_url !== undefined) {
   mailText = "ngrok error, please restart VPN";
 }
 
-var transporter = createTransport({
-  service: "gmail",
-  auth: {
-    user: senderMail,
-    pass: senderPassword,
-  },
-});
+const sendMail = (text: string, recipient: string) => {
+  var transporter = createTransport({
+    service: "gmail",
+    auth: {
+      user: senderMail,
+      pass: senderPassword,
+    },
+  });
 
-var mailOptions: Options = {
-  from: senderMail,
-  to: recipientMail,
-  subject: "New VPN Settings",
-  text: mailText,
+  var mailOptions: Options = {
+    from: senderMail,
+    to: recipient,
+    subject: "New VPN Settings",
+    text,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 };
 
-transporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Email sent: " + info.response);
-  }
-});
+if (recipientMail !== undefined) {
+  sendMail(mailText, recipientMail);
+} else {
+  console.log("No recipient mail");
+}
