@@ -9,6 +9,14 @@ const senderPassword: string | undefined = process.env.SENDERPASSWORD;
 const recipientMail: string | undefined = process.env.RECIPIENTMAIL;
 const ngrok_url: string | undefined = process.env.NGROK_URL;
 let mailText: string;
+let recipients: string[];
+
+if (recipientMail !== undefined) {
+  recipients = recipientMail.split(",");
+} else {
+  console.log("No recipients");
+  process.exit();
+}
 
 if (ngrok_url !== undefined) {
   const clean_ngrok_url = ngrok_url
@@ -45,8 +53,6 @@ const sendMail = (text: string, recipient: string) => {
   });
 };
 
-if (recipientMail !== undefined) {
-  sendMail(mailText, recipientMail);
-} else {
-  console.log("No recipient mail");
-}
+recipients.forEach((recipient) => {
+  sendMail(mailText, recipient);
+});
