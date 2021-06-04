@@ -11,26 +11,24 @@ and use this image to generate user configuration.
 
 In order to enable two factor authentication the following steps are required.
 
-* Choose a more secure [cipher](https://community.openvpn.net/openvpn/wiki/SWEET32) to use because since [OpenVPN 2.3.13](https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn23#OpenVPN2.3.13) the default openvpn cipher BF-CBC will cause a renegotiated connection every 64 MB of data
+-   Choose a more secure [cipher](https://community.openvpn.net/openvpn/wiki/SWEET32) to use because since [OpenVPN 2.3.13](https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn23#OpenVPN2.3.13) the default openvpn cipher BF-CBC will cause a renegotiated connection every 64 MB of data
 
-* Generate server configuration with `-2` and `-C $CIPHER` options
+-   Generate server configuration with `-2` and `-C $CIPHER` options
 
-        docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://vpn.example.com -2 -C $CIPHER
+          docker run -v $OVPN_DATA:/etc/openvpn --rm ghoscht/openvpn ovpn_genconfig -u udp://vpn.example.com -2 -C $CIPHER
 
-* Generate your client certificate (possibly without a password since you're using OTP)
+-   Generate your client certificate (possibly without a password since you're using OTP)
 
-        docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full <user> nopass
+          docker run -v $OVPN_DATA:/etc/openvpn --rm -it ghoscht/openvpn easyrsa build-client-full <user> nopass
 
-* Generate authentication configuration for your client. -t is needed to show QR code, -i is optional for interactive usage
+-   Generate authentication configuration for your client. -t is needed to show QR code, -i is optional for interactive usage
 
-        docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_otp_user <user>
+          docker run -v $OVPN_DATA:/etc/openvpn --rm -it ghoscht/openvpn ovpn_otp_user <user>
 
 The last step will generate OTP configuration for the provided user with the following options
 
-```
-google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=3 \
-    -l "${1}@${OVPN_CN}" -s /etc/openvpn/otp/${1}.google_authenticator
-```
+    google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=3 \
+        -l "${1}@${OVPN_CN}" -s /etc/openvpn/otp/${1}.google_authenticator
 
 It will also show a shell QR code in terminal you can scan with the Google Authenticator application. It also provides
 a link to a google chart url that will display a QR code for the authentication.
@@ -62,14 +60,12 @@ Finally it will enable the openvpn plugin `openvpn-plugin-auth-pam.so` in server
 
 If something is not working you can verify your PAM setup with these commands
 
-```
-# Start a shell in container
-docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn bash
-# Then in container you have pamtester utility already installed
-which pamtester
-# To check authentication use this command that will prompt for a valid code from Authenticator APP
-pamtester -v openvpn <user> authenticate
-```
+    # Start a shell in container
+    docker run -v $OVPN_DATA:/etc/openvpn --rm -it ghoscht/openvpn bash
+    # Then in container you have pamtester utility already installed
+    which pamtester
+    # To check authentication use this command that will prompt for a valid code from Authenticator APP
+    pamtester -v openvpn <user> authenticate
 
 In the last command `<user>` should be replaced by the exact string you used in the ovpn_otp_user command.
 

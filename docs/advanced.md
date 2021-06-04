@@ -4,17 +4,18 @@ The [`ovpn_genconfig`](/bin/ovpn_genconfig) script is intended for simple config
 
 ## Create host volume mounts rather than data volumes
 
-* Refer to the Quick Start document, and substitute `-v $OVPN_DATA:/etc/openvpn` with `-v /path/on/host/openvpn0:/etc/openvpn`
-* Quick example that is likely to be out of date, but here's how to get started:
+-   Refer to the Quick Start document, and substitute `-v $OVPN_DATA:/etc/openvpn` with `-v /path/on/host/openvpn0:/etc/openvpn`
 
-        mkdir openvpn0
-        cd openvpn0
-        docker run --rm -v $PWD:/etc/openvpn kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM:1194
-        docker run --rm -v $PWD:/etc/openvpn -it kylemanna/openvpn ovpn_initpki
-        vim openvpn.conf
-        docker run --rm -v $PWD:/etc/openvpn -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
-        docker run --rm -v $PWD:/etc/openvpn kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
+-   Quick example that is likely to be out of date, but here's how to get started:
 
-* Start the server with:
+          mkdir openvpn0
+          cd openvpn0
+          docker run --rm -v $PWD:/etc/openvpn ghoscht/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM:1194
+          docker run --rm -v $PWD:/etc/openvpn -it ghoscht/openvpn ovpn_initpki
+          vim openvpn.conf
+          docker run --rm -v $PWD:/etc/openvpn -it ghoscht/openvpn easyrsa build-client-full CLIENTNAME nopass
+          docker run --rm -v $PWD:/etc/openvpn ghoscht/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 
-        docker run -v $PWD:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
+-   Start the server with:
+
+          docker run -v $PWD:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN ghoscht/openvpn

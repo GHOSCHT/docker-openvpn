@@ -4,20 +4,20 @@ Random things I do to debug the containers.
 
 ## Login Shells
 
-* Create a shell in the running docker container with `docker exec`.
-* To modify the data, you can also mount the data container and modify it with
+-   Create a shell in the running docker container with `docker exec`.
+-   To modify the data, you can also mount the data container and modify it with
 
-        docker run --rm -it -v $OVPN_DATA:/etc/openvpn kylemanna/openvpn bash -l
+          docker run --rm -it -v $OVPN_DATA:/etc/openvpn ghoscht/openvpn bash -l
 
 ## Stream OpenVPN Logs
 
-1. Get the container's name or container ID:
+1.  Get the container's name or container ID:
 
         root@vpn:~/docker-openvpn# docker ps
         CONTAINER ID        IMAGE                      COMMAND             CREATED             STATUS              PORTS                    NAMES
-        ed335aaa9b82        kylemanna/openvpn:latest   ovpn_run            5 minutes ago       Up 5 minutes        0.0.0.0:1194->1194/udp   sad_lovelace
+        ed335aaa9b82        ghoscht/openvpn:latest   ovpn_run            5 minutes ago       Up 5 minutes        0.0.0.0:1194->1194/udp   sad_lovelace
 
-2. Tail the logs:
+2.  Tail the logs:
 
         root@vpn:~/docker-openvpn# docker logs -f sad_lovelace
         + mkdir -p /dev/net
@@ -36,4 +36,3 @@ Random things I do to debug the containers.
         Tue Jul  1 06:56:49 2014 Outgoing Control Channel Authentication: Using 160 bit message hash 'SHA1' for HMAC authentication
         Tue Jul  1 06:56:49 2014 Incoming Control Channel Authentication: Using 160 bit message hash 'SHA1' for HMAC authentication
         Tue Jul  1 06:56:49 2014 Socket Buffers: R=[212992->131072] S=[212992->131072]
-

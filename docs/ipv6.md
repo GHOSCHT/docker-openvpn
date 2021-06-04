@@ -8,7 +8,6 @@ This feature is advanced and recommended only for those who already have a funct
 
 Systemd is used to setup a static route and Debian 8.1 or later is recommended as the host distribution.  Others probably work, but haven't been tested.
 
-
 ### Step 1 — Setup IPv6 on the Host Machine
 
 The tutorial uses a free tunnel from [tunnelbroker.net](https://tunnelbroker.net/) to get a /64 and /48 prefix allocated to me.  The tunnel endpoint is less then 3 ms away from Digital Ocean's San Francisco datacenter.
@@ -34,7 +33,6 @@ Test that IPv6 works on the host:
 
 If this doesn't work, figure it out.  It may be necessary to add an firewall rule to allow IP protocol 41 through the firewall.
 
-
 ### Step 2 — Update Docker's Init To Enable IPv6 Support
 
 Add the `--ipv6` to the Docker daemon invocation.
@@ -47,7 +45,6 @@ On modern **systemd** distributions copy the service file and modify it and relo
 
     sed -e 's:^\(ExecStart.*\):\1 --ipv6:' /lib/systemd/system/docker.service | tee /etc/systemd/system/docker.service
     systemctl restart docker.service
-
 
 ### Step 3 — Setup the systemd Unit File
 
@@ -86,8 +83,7 @@ Append the default route for the public Internet:
 
 If all went according to plan, then `ping6 2600::` and `ping6 google.com` should work.
 
-Fire up a web browser and attempt to navigate to [https://ipv6.google.com](https://ipv6.google.com).
-
+Fire up a web browser and attempt to navigate to <https://ipv6.google.com>.
 
 ## Connect to the OpenVPN Server Over IPv6
 
@@ -97,5 +93,5 @@ This will allow connections over IPv4 and IPv6.
 
 Generate server configuration with the udp6 or tcp6 protocol:
 
-    docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp6://VPN.SERVERNAME.COM
-    docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u tcp6://VPN.SERVERNAME.COM
+    docker run -v $OVPN_DATA:/etc/openvpn --rm ghoscht/openvpn ovpn_genconfig -u udp6://VPN.SERVERNAME.COM
+    docker run -v $OVPN_DATA:/etc/openvpn --rm ghoscht/openvpn ovpn_genconfig -u tcp6://VPN.SERVERNAME.COM
