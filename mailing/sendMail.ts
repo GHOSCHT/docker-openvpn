@@ -24,7 +24,7 @@ if (ngrok_url !== undefined) {
     .replace(/["']/g, "")
     .replace(".tcp.ngrok.io:", ":");
   const split_ngrok_url = clean_ngrok_url.split(":");
-  mailText = `remote ${split_ngrok_url[0]}.tcp.ngrok.io ${split_ngrok_url[1]} tcp`;
+  mailText = `Server: ${split_ngrok_url[0]}.tcp.ngrok.io\nPort: ${split_ngrok_url[1]}`;
 } else {
   mailText = "ngrok error, please restart VPN";
 }
