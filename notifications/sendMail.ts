@@ -41,7 +41,7 @@ const sendMail = (text: string, recipient: string) => {
   var mailOptions: Options = {
     from: senderMail,
     to: recipient,
-    subject: "New VPN Settings",
+    subject: "❗️ New VPN Settings ❗️",
     text,
   };
 
