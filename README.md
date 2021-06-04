@@ -6,6 +6,12 @@ OpenVPN server in a Docker container complete with an EasyRSA PKI CA that works 
 
 -   Docker Registry @ [ghoscht/openvpn](https://hub.docker.com/r/ghoscht/openvpn)
 -   Original GitHub Repo @ [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn)
+-   Implementation of XOR Patch @ [lawtancool/docker-openvpn-xor](https://github.com/lawtancool/docker-openvpn-xor)
+
+#### Clients with support for the Tunnelblick obfuscation patch
+* Windows: https://github.com/lawtancool/openvpn-windows-xor
+* Android: https://github.com/lawtancool/ics-openvpn-xor
+* macOS: https://tunnelblick.net/
 
 ## Quick Start
 
@@ -91,7 +97,7 @@ included scripts to automatically generate:
 -   a private key
 -   a self-certificate matching the private key for the OpenVPN server
 -   an EasyRSA CA key and certificate
--   tls-crypt for security & censorship circumvention in some regions or open WiFi hotspots
+-   tls-crypt & xor-patch for security & censorship circumvention in some regions or open WiFi hotspots
 
 The OpenVPN server is started with the default run cmd of `ovpn_run`
 
