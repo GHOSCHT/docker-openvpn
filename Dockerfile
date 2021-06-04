@@ -3,11 +3,30 @@
 # Smallest base image
 FROM node:10.23.1-alpine3.9
 
-# Testing: pamtester
+#Install ubuntu build-essentials equivalent
+RUN apk add --no-cache --update-cache build-base linux-headers libressl-dev lzo-dev iproute2 linux-pam-dev
+
+#Testing: pamtester
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-    apk add --update openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester libqrencode && \
+    apk add --update iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester libqrencode && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+
+
+#Build openvpn from source & install xor patch
+RUN wget http://swupdate.openvpn.org/community/releases/openvpn-2.5.0.tar.gz && tar xvf openvpn-2.5.0.tar.gz && \
+    wget https://github.com/Tunnelblick/Tunnelblick/archive/v3.8.5beta02.zip && unzip v3.8.5beta02.zip && \
+    cp Tunnelblick-3.8.5beta02/third_party/sources/openvpn/openvpn-2.5.0/patches/*.diff openvpn-2.5.0 && \
+    cd openvpn-2.5.0 && \
+    patch -p1 < 02-tunnelblick-openvpn_xorpatch-a.diff && \
+    patch -p1 < 03-tunnelblick-openvpn_xorpatch-b.diff && \
+    patch -p1 < 04-tunnelblick-openvpn_xorpatch-c.diff && \
+    patch -p1 < 05-tunnelblick-openvpn_xorpatch-d.diff && \
+    patch -p1 < 06-tunnelblick-openvpn_xorpatch-e.diff && \
+    ./configure --disable-systemd --disable-systemd --enable-async-push --enable-iproute2 && \
+    make && make install && \
+    cd .. && rm -r openvpn-2.5.0 && rm -r Tunnelblick-3.8.5beta02
+
 
 # Needed by scripts
 ENV OPENVPN=/etc/openvpn
