@@ -1,13 +1,15 @@
 # OpenVPN for Docker
 
-OpenVPN server in a Docker container complete with an EasyRSA PKI CA that works without port forwarding. All you need is a [ngrok](https://ngrok.com/) account and a spare [Gmail](https://mail.google.com/) account to send ngrok notifications from.
+OpenVPN server in a Docker container complete with an EasyRSA PKI CA that works without port forwarding. All you need is a [ngrok](https://ngrok.com/) account and a spare [Gmail](https://mail.google.com/) account to send ngrok notifications from. A seperate OpenVPN [client](#clients) is necessary as well.
 
 #### Upstream Links
 
 -   Docker Registry @ [ghoscht/openvpn](https://hub.docker.com/r/ghoscht/openvpn)
+-   GitHub @ [ghoscht/docker-openvpn](https://github.com/GHOSCHT/docker-openvpn)
 -   Original GitHub Repo @ [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn)
 -   Implementation of XOR Patch @ [lawtancool/docker-openvpn-xor](https://github.com/lawtancool/docker-openvpn-xor)
 
+<a name="clients"></a>
 #### Clients with support for the Tunnelblick obfuscation patch
 * Windows: https://github.com/lawtancool/openvpn-windows-xor
 * Android: https://github.com/lawtancool/ics-openvpn-xor
@@ -187,3 +189,8 @@ compromise of the server.  There are many arguments surrounding this, but the
 take away is that it certainly makes it more difficult to break out of the
 container.  People are actively working on Linux containers to make this more
 of a guarantee in the future.
+
+## Differences from kylemanna/openvpn
+* Uses ngrok to get around locked down port forwarding with gmail notification for the new ngrok ip/port combo
+* Compiles OpenVPN from source, applying the [Tunnelblick obfuscation patches](https://github.com/Tunnelblick/Tunnelblick/tree/master/third_party/sources/openvpn/)
+
