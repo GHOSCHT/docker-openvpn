@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "dotenv": "^8.2.0",
+    "ngrok": "^4.0.1",
     "nodemailer": "^6.5.0"
   },
   "devDependencies": {

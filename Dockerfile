@@ -43,13 +43,9 @@ ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
 
 # Ngrok tunneling
-RUN apk --no-cache add curl jq unzip
-RUN curl -o ngrok-compressed.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
-RUN unzip ngrok-compressed.zip
-RUN chmod +x /ngrok 
 COPY start.sh /
-COPY mailing/* /mailing/
-RUN yarn --cwd /mailing
+COPY server/* /server/
+RUN yarn --cwd /server
 RUN npm install typescript ts-node -g
 
 # Add support for OTP authentication using a PAM module
