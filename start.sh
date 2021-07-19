@@ -1,3 +1,3 @@
 #!/bin/bash
 (cd server && ts-node server.ts) &
-#ovpn_run &
+ovpn_run
