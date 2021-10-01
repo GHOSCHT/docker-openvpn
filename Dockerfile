@@ -54,4 +54,8 @@ ADD ./otp/openvpn /etc/pam.d/
 #START
 RUN awk '{ sub("\r$", ""); print }' /start.sh > /start_unix.sh
 RUN chmod +x /start_unix.sh 
+
+HEALTHCHECK --start-period=5m --timeout=3s \
+    CMD pgrep openvpn || exit 1
+
 CMD ["./start_unix.sh"]
