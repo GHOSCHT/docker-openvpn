@@ -51,6 +51,11 @@ RUN npm install typescript ts-node -g
 # Add support for OTP authentication using a PAM module
 ADD ./otp/openvpn /etc/pam.d/
 
+# Add ngrok health check
+
+HEALTHCHECK --timeout=3s \
+    CMD pgrep ngrok || exit 1
+
 #START
 RUN awk '{ sub("\r$", ""); print }' /start.sh > /start_unix.sh
 RUN chmod +x /start_unix.sh 
