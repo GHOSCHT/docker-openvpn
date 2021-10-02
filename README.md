@@ -22,7 +22,7 @@ OpenVPN server in a Docker container complete with an EasyRSA PKI CA that works 
     service.  Users are encourage to replace `example` with a descriptive name of
     their choosing.
 
-        OVPN_DATA="ovpn-data-example"
+        OVPN_DATA="openvpn_data"
 
 -   Initialize the `$OVPN_DATA` container that will hold the configuration files
     and certificates.  The container will prompt for a passphrase to protect the
