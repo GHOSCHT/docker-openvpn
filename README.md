@@ -190,7 +190,7 @@ take away is that it certainly makes it more difficult to break out of the
 container.  People are actively working on Linux containers to make this more
 of a guarantee in the future.
 
-## Differences from kylemanna/openvpn
+## Differences to kylemanna/openvpn
 * Uses ngrok to get around locked down port forwarding with gmail notification for the new ngrok ip/port combo
 * Compiles OpenVPN from source, applying the [Tunnelblick obfuscation patches](https://github.com/Tunnelblick/Tunnelblick/tree/master/third_party/sources/openvpn/)
 
